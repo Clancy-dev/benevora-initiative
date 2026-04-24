@@ -1,5 +1,6 @@
-import { Header } from '@/components/Header'
+
 import { Footer } from '@/components/Footer'
+import { Header } from '@/components/front-header'
 import Link from 'next/link'
 import { FaCircleCheck } from 'react-icons/fa6'
 
