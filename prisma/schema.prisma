@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+// ------------------------
+// USER MODEL
+// ------------------------
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String 
+  firstName String  
+  lastName  String   
+  avatar    String?
+  role      Role     @default(USER)
+  emailVerified DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // NextAuth relations
+  sessions  Session[]
+  accounts  Account[]
+
+  // App-specific relations
+  receipts          Receipt[]
+  companySettings   CompanySettings?
+
+  createdReceipts   Receipt[] @relation("ReceiptCreatedBy")
+  updatedReceipts   Receipt[] @relation("ReceiptUpdatedBy")
+
+  createdCompanies  CompanySettings[] @relation("CreatedCompany")
+  updatedCompanies  CompanySettings[] @relation("UpdatedCompany")
+
+  // Add this for Activity
+  activities Activity[]
+
+  // Reset token
+  resetToken        String?
+  resetTokenExpiry  DateTime?
+
+  
+}
+
+// ------------------------
+// NEXTAUTH MODELS
+// ------------------------
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
+// ------------------------
+// RECEIPT MODEL
+// ------------------------
+model Receipt {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime? // ✅ Soft delete
+
+  // Owner
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Track created/updated by
+  createdById String?
+  updatedById String?
+  createdBy   User?  @relation("ReceiptCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?  @relation("ReceiptUpdatedBy", fields: [updatedById], references: [id])
+
+  // Customer info
+  customerOrganization String
+  customerName        String?
+  customerEmail       String?
+  clientContacts      Json?
+  additionalNames     Json?
+  additionalEmails    Json?
+
+  // Project info
+  projectName        String
+  serviceType        String
+  projectStartDate   DateTime
+  projectEndDate     DateTime
+  description        String?
+
+  // Financial
+  projectTotal       Float
+  amountPaid         Float
+  remainingBalance   Float
+  currency           String
+
+  // Payment
+  paymentMethod       String
+  bankName            String?
+  bankAccountNumber   String?
+  cardNumber          String?
+  mobileMoneyProvider String?
+  mobileNumber        String?
+  countryCode         String?
+
+  // Company snapshot (optional)
+  companyName     String?
+  companyEmail    String?
+  companyLogo     String?
+  companyContacts Json?
+}
+
+// ------------------------
+// COMPANY SETTINGS MODEL
+// ------------------------
+model CompanySettings {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Owner (unique one-to-one)
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name     String
+  email    String
+  logo     String?
+  contacts Json
+
+  createdById String?
+  updatedById String?
+  createdBy   User? @relation("CreatedCompany", fields: [createdById], references: [id])
+  updatedBy   User? @relation("UpdatedCompany", fields: [updatedById], references: [id])
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  action    String
+  metadata  Json?    // optional extra info
+  createdAt DateTime @default(now())
+}

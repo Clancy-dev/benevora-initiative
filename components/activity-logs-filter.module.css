@@ -1,0 +1,16 @@
+.datetimeInput {
+  padding-right: 2.5rem;
+}
+
+.datetimeInput::-webkit-outer-spin-button,
+.datetimeInput::-webkit-inner-spin-button {
+  -webkit-appearance: auto;
+  appearance: auto;
+  cursor: pointer;
+}
+
+.datetimeInput::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  padding: 0.25rem;
+  margin-right: 0.5rem;
+}
