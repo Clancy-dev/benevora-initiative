@@ -86,7 +86,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="flex flex-col md:flex-row justify-between items-center text-sm opacity-75">
           <p>&copy; 2024 Benevora Initiative. All rights reserved.</p>
-          <Link href="/admin" className="mt-4 md:mt-0 text-sm font-semibold hover:underline">
+          <Link href="/login" className="mt-4 md:mt-0 text-sm font-semibold hover:underline">
             Admin Portal
           </Link>
         </div>

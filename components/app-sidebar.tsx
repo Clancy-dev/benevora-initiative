@@ -2,12 +2,23 @@
 
 import * as React from "react";
 import {
+  IconActivity,
+  IconAddressBook,
+  IconArticle,
   IconBuilding,
+  IconCalendarEvent,
+  IconCrown,
   IconDashboard,
   IconFileAnalytics,
   IconFileText,
+  IconHeart,
+  IconHeartHandshake,
+  IconLayout,
+  IconLayoutDashboard,
+  IconPhoto,
   IconReceipt,
   IconSettings,
+  IconShare,
   IconUser,
   IconUserCircle,
   IconUsers,
@@ -26,6 +37,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 // Accept role as prop
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
@@ -33,23 +46,63 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ role, ...props }: AppSidebarProps) {
+
+  const { theme } = useTheme();
+
   // Filter nav items based on role
   const navMainItems = [
     {
       title: "Overview",
       url: "/dashboard/overview",
-      icon: IconDashboard,
+      icon: IconLayoutDashboard,
     },
     {
-      title: "Receipts",
-      url: "/dashboard/receipt/receipts",
-      icon: IconReceipt,
+      title: "Banners",
+      url: "/dashboard/banners",
+      icon: IconPhoto,
     },
     {
-      title: "Logs",
-      url: "/dashboard/logs",
-      icon: IconFileText,
+      title: "Contact Information",
+      url: "/dashboard/contact-information",
+      icon: IconAddressBook,
     },
+    {
+      title: "Social Media",
+      url: "/dashboard/social-media",
+      icon: IconShare,
+    },
+     {
+      title: "Events",
+      url: "/dashboard/events",
+      icon: IconCalendarEvent,
+    },
+    {
+      title: "Blogs",
+      url: "/dashboard/blogs",
+      icon: IconArticle,
+    },
+     {
+      title: "Office Photos",
+      url: "/dashboard/office-photos",
+      icon: IconBuilding,
+    },
+    {
+      title: "Donation Information",
+      url: "/dashboard/donation-information",
+      icon: IconHeart,
+    },
+     {
+      title: "Founders",
+      url: "/dashboard/founders",
+      icon: IconCrown,
+    },
+     {
+      title: "My Activity",
+      url: "/dashboard/my-activity",
+      icon: IconActivity,
+    },
+
+
     // Only show these to ADMIN
     ...(role === "ADMIN"
       ? [
@@ -59,27 +112,25 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
             icon: IconUsers,
           },
           {
-            title: "All Logs",
-            url: "/dashboard/allLogs",
-            icon: IconFileAnalytics,
+            title: "Global Activity",
+            url: "/dashboard/global-activity",
+            icon: IconFileText,
           },
         ]
       : []),
-    {
-      title: "Company Configuration",
-      url: "/dashboard/companyConfiguration",
-      icon: IconBuilding,
-    },
-    {
-      title: "Account",
-      url: "/dashboard/account",
-      icon: IconUserCircle,
-    },
-     {
+
+       {
       title: "View Site",
       url: "/",
       icon: IconWorld,
     },
+     {
+      title: "Settings",
+      url: "/dashboard/settings",
+      icon: IconSettings,
+    },
+  
+   
     
   ];
 
@@ -91,14 +142,25 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:p-1.5!">
-              <a href="/dashboard/overview">
-                <span className="text-base font-semibold flex gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                    <IconReceipt className="w-5 h-5 text-primary-foreground" />
-                  </div>
-                  <h1 className="text-lg font-semibold">Receipt Generator</h1>
-                </span>
-              </a>
+              <a href="/dashboard/overview" className="flex items-center gap-3">
+  <div className="relative w-8 h-8">
+    <Image
+      src={theme === "dark" ? "/logo-dark.png" : "/logo.png"}
+      alt="Benevora Initiative"
+      fill
+      className="object-contain"
+    />
+  </div>
+
+  <div className="flex flex-col leading-tight">
+    <span className="text-sm font-bold text-primary">
+      Benevora
+    </span>
+    <span className="text-xs text-muted-foreground">
+      Initiative
+    </span>
+  </div>
+</a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

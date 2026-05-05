@@ -66,48 +66,6 @@ async function DashboardContent() {
     <div className="space-y-8">
       <GreetingSection greeting={getGreeting()} firstName={firstName} role={role} />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <MetricCard
-          title="Total Receipts"
-          value={metrics.totalReceipts.toString()}
-          subtitle="All time"
-          icon="📄"
-          variant="default"
-        />
-        <MetricCard
-          title="Pending Payments"
-          value={formatCurrency(metrics.totalPendingPayments)}
-          subtitle="Total remaining"
-          icon="⏳"
-          variant="highlight"
-        />
-        <RevenueSelectorCard
-          todayRevenue={metrics.todayRevenue}
-          weekRevenue={metrics.weekRevenue}
-          monthRevenue={metrics.monthRevenue}
-        />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <Suspense fallback={<div className="h-80 bg-muted rounded-lg animate-pulse" />}>
-            <RevenueChart data={trends} />
-          </Suspense>
-        </div>
-        <Suspense fallback={<div className="h-80 bg-muted rounded-lg animate-pulse" />}>
-          <TopCustomersChart data={topCustomers} />
-        </Suspense>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Suspense fallback={<div className="h-80 bg-muted rounded-lg animate-pulse" />}>
-          <PaymentMethodsChart data={paymentMethods} />
-        </Suspense>
-      </div>
-
-      <Suspense fallback={<div className="h-96 bg-muted rounded-lg animate-pulse" />}>
-        <SlowPayingClients data={slowClients} />
-      </Suspense>
     </div>
   );
 }
