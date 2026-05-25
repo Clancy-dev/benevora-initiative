@@ -31,7 +31,8 @@ import { useToast } from "@/hooks/use-toast";
 
 import { ChevronLeft, MoreHorizontal, RotateCcw, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { getDeletedBanners, permanentDeleteBanner, restoreBanner } from "@/actions/banner";
+import { getDeletedBanners, permanentDeleteBanner, restoreBanner } from "@/actions/banner-actions/home-banner";
+
 
 // Placeholder user context - replace with actual auth
 const CURRENT_USER_ID = "user_placeholder_id";

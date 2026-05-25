@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { ChevronLeft } from "lucide-react";
-import { getBanner } from "@/actions/banner";
 import { BannerForm } from "@/components/banners/BannerForm";
+import { getBanner } from "@/actions/banner-actions/home-banner";
 
 // Placeholder user context - replace with actual auth
 const CURRENT_USER_ID = "user_placeholder_id";

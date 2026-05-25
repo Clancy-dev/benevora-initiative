@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Trash2 } from "lucide-react";
-import { getAllBanners } from "@/actions/banner";
 import { BannerTable } from "@/components/banners/BannerTable";
+import { getAllBanners } from "@/actions/banner-actions/home-banner";
 
 // Placeholder user context - replace with actual auth
 const CURRENT_USER_ID = "user_placeholder_id";

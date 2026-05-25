@@ -16,7 +16,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { ChevronLeft, Edit, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { deleteBanner, getBanner } from "@/actions/banner";
+import { deleteBanner, getBanner } from "@/actions/banner-actions/home-banner";
+
 
 // Placeholder user context - replace with actual auth
 const CURRENT_USER_ID = "user_placeholder_id";

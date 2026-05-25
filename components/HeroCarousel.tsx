@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getAllBanners } from '@/actions/banner'
+import { getAllBanners } from '@/actions/banner-actions/home-banner'
+
 
 interface Banner {
   id: string
@@ -39,8 +40,10 @@ export function HeroCarousel() {
   }, [slides])
 
   if (slides.length === 0) {
-    return null
-  }
+  return (
+    <section className="relative h-screen max-h-[600px] bg-gray-200 overflow-hidden" />
+  )
+}
 
   const slide = slides[currentSlide]
 
