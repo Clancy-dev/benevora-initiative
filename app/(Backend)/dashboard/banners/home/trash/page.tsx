@@ -27,11 +27,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useToast } from "@/hooks/use-toast";
 
 import { ChevronLeft, MoreHorizontal, RotateCcw, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { getDeletedBanners, permanentDeleteBanner, restoreBanner } from "@/actions/banner-actions/home-banner";
+import toast from "react-hot-toast";
 
 
 // Placeholder user context - replace with actual auth
@@ -39,7 +39,6 @@ const CURRENT_USER_ID = "user_placeholder_id";
 
 export default function TrashPage() {
   const router = useRouter();
-  const { toast } = useToast();
   const [banners, setBanners] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dialogType, setDialogType] = useState<"restore" | "delete" | null>(null);
@@ -53,18 +52,10 @@ export default function TrashPage() {
       if (result.success) {
         setBanners(result.data ?? []);
       } else {
-        toast({
-          title: "Error",
-          description: result.error || "Failed to load banners",
-          variant: "destructive",
-        });
+        toast.error("Failed to load banners")
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to load banners",
-        variant: "destructive",
-      });
+      toast.error("Failed to load banners")
     } finally {
       setIsLoading(false);
     }
@@ -92,24 +83,14 @@ export default function TrashPage() {
       const result = await restoreBanner(CURRENT_USER_ID, selectedBannerId);
 
       if (result.success) {
-        toast({
-          title: "Success",
-          description: "Banner restored successfully",
-        });
+        toast.success("Banner restored successfully")
         loadBanners();
       } else {
-        toast({
-          title: "Error",
-          description: result.error || "Failed to restore banner",
-          variant: "destructive",
-        });
+        toast.error("Failed to restore banner")
+      
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to restore banner",
-        variant: "destructive",
-      });
+      toast.error("Failed to restore banner")
     } finally {
       setIsProcessing(false);
       setDialogType(null);
@@ -125,24 +106,13 @@ export default function TrashPage() {
       const result = await permanentDeleteBanner(CURRENT_USER_ID, selectedBannerId);
 
       if (result.success) {
-        toast({
-          title: "Success",
-          description: "Banner permanently deleted",
-        });
+        toast.success("Banner permanently deleted")
         loadBanners();
       } else {
-        toast({
-          title: "Error",
-          description: result.error || "Failed to delete banner",
-          variant: "destructive",
-        });
+        toast.error("Failed to delete banner")
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to delete banner",
-        variant: "destructive",
-      });
+      toast.error("Failed to delete banner")
     } finally {
       setIsProcessing(false);
       setDialogType(null);

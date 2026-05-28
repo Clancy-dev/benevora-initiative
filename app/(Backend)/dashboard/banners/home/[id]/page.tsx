@@ -13,10 +13,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useToast } from "@/hooks/use-toast";
 import { ChevronLeft, Edit, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { deleteBanner, getBanner } from "@/actions/banner-actions/home-banner";
+import toast from "react-hot-toast";
 
 
 // Placeholder user context - replace with actual auth
@@ -25,7 +25,6 @@ const CURRENT_USER_ID = "user_placeholder_id";
 export default function BannerDetailPage() {
   const router = useRouter();
   const params = useParams();
-  const { toast } = useToast();
   const bannerId = params.id as string;
   const [banner, setBanner] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,19 +39,12 @@ export default function BannerDetailPage() {
         if (result.success) {
           setBanner(result.data);
         } else {
-          toast({
-            title: "Error",
-            description: result.error || "Failed to load banner",
-            variant: "destructive",
-          });
+          toast.error("Failed to load banner")
+          
           router.push("/dashboard/banners/home");
         }
       } catch (error) {
-        toast({
-          title: "Error",
-          description: "Failed to load banner",
-          variant: "destructive",
-        });
+        toast.error("Failed to load banner")
         router.push("/dashboard/banners/home");
       } finally {
         setIsLoading(false);
@@ -60,7 +52,7 @@ export default function BannerDetailPage() {
     };
 
     loadBanner();
-  }, [bannerId, router, toast]);
+  }, [bannerId, router]);
 
   const handleDeleteClick = () => {
     setIsOpen(true);
@@ -72,24 +64,14 @@ export default function BannerDetailPage() {
       const result = await deleteBanner(CURRENT_USER_ID, bannerId);
 
       if (result.success) {
-        toast({
-          title: "Success",
-          description: "Banner deleted successfully",
-        });
+        toast.success("Banner deleted successfully")
+        
         router.push("/dashboard/banners/home");
       } else {
-        toast({
-          title: "Error",
-          description: result.error || "Failed to delete banner",
-          variant: "destructive",
-        });
+        toast.error("Failed to delete banner")
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to delete banner",
-        variant: "destructive",
-      });
+      toast.error("Failed to delete banner")
     } finally {
       setIsDeleting(false);
       setIsOpen(false);

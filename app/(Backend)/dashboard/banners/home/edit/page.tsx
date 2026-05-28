@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import { ChevronLeft } from "lucide-react";
 import { BannerForm } from "@/components/banners/BannerForm";
 import { getBanner } from "@/actions/banner-actions/home-banner";
+import toast from "react-hot-toast";
 
 // Placeholder user context - replace with actual auth
 const CURRENT_USER_ID = "user_placeholder_id";
@@ -14,7 +14,6 @@ const CURRENT_USER_ID = "user_placeholder_id";
 export default function EditHomeBannerPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { toast } = useToast();
   const bannerId = searchParams.get("id");
   const [banner, setBanner] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,19 +31,11 @@ export default function EditHomeBannerPage() {
         if (result.success) {
           setBanner(result.data);
         } else {
-          toast({
-            title: "Error",
-            description: result.error || "Failed to load banner",
-            variant: "destructive",
-          });
+          toast.error("Failed to load banner")
           router.push("/dashboard/banners/home");
         }
       } catch (error) {
-        toast({
-          title: "Error",
-          description: "Failed to load banner",
-          variant: "destructive",
-        });
+        toast.error("Failed to load banner")
         router.push("/dashboard/banners/home");
       } finally {
         setIsLoading(false);
@@ -52,7 +43,7 @@ export default function EditHomeBannerPage() {
     };
 
     loadBanner();
-  }, [bannerId, router, toast]);
+  }, [bannerId, router]);
 
   if (isLoading) {
     return (

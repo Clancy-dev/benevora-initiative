@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import { BannerFormInput, bannerFormSchema } from "@/lib/validations/banner";
-import { createBanner, updateBanner } from "@/actions/banner";
+import { createBanner, updateBanner } from "@/actions/banner-actions/home-banner";
+import toast from "react-hot-toast";
+
 
 interface BannerFormProps {
   mode: "create" | "edit";
@@ -26,7 +27,6 @@ export function BannerForm({
   handleUpload,
 }: BannerFormProps) {
   const router = useRouter();
-  const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>(initialData?.imageUrl || "");
@@ -59,17 +59,11 @@ export function BannerForm({
 
       setImageUrl(url);
       setFormData((prev) => ({ ...prev, imageUrl: url }));
-      toast({
-        title: "Success",
-        description: "Image uploaded successfully",
-      });
+      toast.success('Image uploaded successfully')
+      
     } catch (error) {
       console.error("Cloudinary upload failed:", error);
-      toast({
-        title: "Error",
-        description: "Failed to upload image",
-        variant: "destructive",
-      });
+      toast.error('Failed to upload image')
     } finally {
       setIsLoading(false);
     }
@@ -109,17 +103,12 @@ export function BannerForm({
       }
 
       if (result.success) {
-        toast({
-          title: "Success",
-          description: `Banner ${mode === "create" ? "created" : "updated"} successfully`,
-        });
+        toast.success(`Banner ${mode === "create" ? "created" : "updated"} successfully`)
+       
         router.push("/dashboard/banners/home");
       } else {
-        toast({
-          title: "Error",
-          description: result.error || "Something went wrong",
-          variant: "destructive",
-        });
+        toast.error("Something went wrong")
+        
       }
     } catch (error: any) {
       if (error.errors) {
@@ -129,11 +118,8 @@ export function BannerForm({
         });
         setErrors(newErrors);
       } else {
-        toast({
-          title: "Error",
-          description: "Failed to save banner",
-          variant: "destructive",
-        });
+        toast.error("Failed to save banner")
+       
       }
     } finally {
       setIsLoading(false);

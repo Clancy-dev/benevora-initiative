@@ -1,3 +1,4 @@
+import { getAllAboutBanners } from '@/actions/banner-actions/about-banner'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/front-header'
 import { MiniHero } from '@/components/MiniHero'
@@ -8,7 +9,7 @@ export const metadata = {
   description: 'Learn about Benevora Initiative, our mission, values, and the team making a difference.',
 }
 
-export default function About() {
+export default async function About() {
   const founders = [
     {
       name: 'Grace Nakamatte',
@@ -36,10 +37,18 @@ export default function About() {
     { image: '/images/gallery-3.jpg', caption: 'Community Celebration' },
   ]
 
+  const result = await getAllAboutBanners()
+
+  const banner = result.success ? result.data?.[0] : null
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
-      <MiniHero image="/images/hero-about.jpg" title="About Us" subtitle="Our Story, Mission & Team" />
+      <MiniHero
+         image={banner?.image ?? '/about-us-default.jpg'}
+         title={banner?.title ?? 'About Us'}
+         subtitle={banner?.subtitle ?? 'Our Story, Mission & Team'}
+      />
 
       {/* Organization Info */}
       <section className="py-16 md:py-24">

@@ -14,14 +14,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus, Trash2 } from "lucide-react";
 import { BannerTable } from "@/components/banners/BannerTable";
 import { getAllBanners } from "@/actions/banner-actions/home-banner";
+import toast from "react-hot-toast";
 
 // Placeholder user context - replace with actual auth
 const CURRENT_USER_ID = "user_placeholder_id";
 
 export default function HomeBannersPage() {
   const router = useRouter();
-  const { toast } = useToast();
-
   const [banners, setBanners] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -37,18 +36,11 @@ export default function HomeBannersPage() {
       if (result.success) {
         setBanners(result.data ?? []);
       } else {
-        toast({
-          title: "Error",
-          description: result.error || "Failed to load banners",
-          variant: "destructive",
-        });
+        toast.error("Failed to load banners")
+       
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to load banners",
-        variant: "destructive",
-      });
+      toast.error("Failed to load banners")
     } finally {
       setIsLoading(false);
     }

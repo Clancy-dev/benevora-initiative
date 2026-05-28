@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from 'next-themes'
 import './globals.css'
+import { Toaster } from 'react-hot-toast'
 
 const geist = Geist({ subsets: ['latin'] })
 const geistMono = Geist_Mono({ subsets: ['latin'] })
@@ -86,6 +87,28 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="font-sans antialiased bg-background text-foreground">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+           {/* 👇 Global toast container */}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              borderRadius: '10px',
+              padding: '12px 16px',
+            },
+            success: {
+              style: {
+                background: '#16a34a',
+                color: '#fff',
+              },
+            },
+            error: {
+              style: {
+                background: '#dc2626',
+                color: '#fff',
+              },
+            },
+          }}
+        />
           {children}
         </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}

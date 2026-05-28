@@ -27,9 +27,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useToast } from "@/hooks/use-toast";
 import { MoreHorizontal, Trash2, Edit, Eye } from "lucide-react";
-import { deleteBanner } from "@/actions/banner";
+import { deleteBanner } from "@/actions/banner-actions/home-banner";
+import toast from "react-hot-toast";
+
 
 interface BannerTableProps {
   banners: any[];
@@ -39,7 +40,6 @@ interface BannerTableProps {
 
 export function BannerTable({ banners, userId, onBannerDeleted }: BannerTableProps) {
   const router = useRouter();
-  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedBannerId, setSelectedBannerId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -57,24 +57,13 @@ export function BannerTable({ banners, userId, onBannerDeleted }: BannerTablePro
       const result = await deleteBanner(userId, selectedBannerId);
 
       if (result.success) {
-        toast({
-          title: "Success",
-          description: "Banner deleted successfully",
-        });
+        toast.success("Banner deleted successfully")
         onBannerDeleted();
       } else {
-        toast({
-          title: "Error",
-          description: result.error || "Failed to delete banner",
-          variant: "destructive",
-        });
+        toast.error("Failed to delete banner")
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to delete banner",
-        variant: "destructive",
-      });
+      toast.error("Failed to delete banner")
     } finally {
       setIsDeleting(false);
       setIsOpen(false);
