@@ -1,4 +1,5 @@
 import { getAllAboutBanners } from '@/actions/banner-actions/about-banner'
+import { getAllFounders } from '@/actions/founders'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/front-header'
 import { MiniHero } from '@/components/MiniHero'
@@ -10,26 +11,14 @@ export const metadata = {
 }
 
 export default async function About() {
-  const founders = [
-    {
-      name: 'Grace Nakamatte',
-      role: 'Founder & Executive Director',
-      image: '/images/gallery-1.jpg',
-      bio: 'A passionate advocate for social change with 15+ years of experience in community development.',
-    },
-    {
-      name: 'James Kiwanuka',
-      role: 'Co-Founder & Programs Director',
-      image: '/images/gallery-2.jpg',
-      bio: 'Dedicated to creating sustainable solutions that uplift communities and create lasting impact.',
-    },
-    {
-      name: 'Dr. Sarah Mutesi',
-      role: 'Co-Founder & Board Chair',
-      image: '/images/gallery-3.jpg',
-      bio: 'An accomplished professional with expertise in organizational leadership and strategic planning.',
-    },
-  ]
+  const resultOfFounders = await getAllFounders();
+  const founders = resultOfFounders.success ? resultOfFounders.data || [] : [];
+  const getGridCols = (count: number) => {
+  if (count === 1) return 'grid-cols-1';
+  if (count === 2) return 'grid-cols-1 md:grid-cols-2';
+  return 'grid-cols-1 md:grid-cols-3';
+};
+  
 
   const galleries = [
     { image: '/images/gallery-1.jpg', caption: 'Community Outreach Program' },
@@ -132,23 +121,28 @@ export default async function About() {
       </section>
 
       {/* Founders */}
-      <section className="py-16 md:py-24">
+      {founders.length > 0 && (
+              <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
             Meet Our Founders
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className={`grid ${getGridCols(founders.length)} gap-8 justify-items-center`}>
             {founders.map((founder, index) => (
               <div
                 key={index}
-                className="bg-background border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                className="bg-background border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow w-full max-w-sm mx-auto"
               >
-                <div className="relative h-64 w-full">
+                <div className="relative h-96 w-full bg-muted">
                   <Image
                     src={founder.image}
                     alt={founder.name}
-                    fill
-                    className="object-cover"
+                    width={500}
+                    height={500}
+                    className={`h-full w-full ${
+                      founders.length === 2 ? 'object-cover' : 'object-cover'
+                    }`}
+                    
                   />
                 </div>
                 <div className="p-6">
@@ -161,6 +155,8 @@ export default async function About() {
           </div>
         </div>
       </section>
+      )}
+
 
       {/* Gallery */}
       <section className="py-16 md:py-24 bg-muted/30">

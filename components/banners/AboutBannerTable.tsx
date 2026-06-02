@@ -165,7 +165,7 @@ export function AboutBannerTable({ banners }: AboutBannerTableProps) {
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
-              className="bg-destructive text-background hover:bg-destructive/90"
+              className="bg-destructive text-background hover:bg-destructive/90 cursor-pointer"
             >
               {isDeleting ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>
