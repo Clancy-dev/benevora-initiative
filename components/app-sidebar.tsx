@@ -6,6 +6,7 @@ import {
   IconAddressBook,
   IconArticle,
   IconBuilding,
+  IconBuildingCommunity,
   IconCalendarEvent,
   IconCrown,
   IconDashboard,
@@ -22,6 +23,7 @@ import {
   IconUser,
   IconUserCircle,
   IconUsers,
+  IconUsersGroup,
   IconWorld,
 
 } from "@tabler/icons-react";
@@ -61,15 +63,15 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
       url: "/dashboard/banners",
       icon: IconPhoto,
     },
-    {
-      title: "Contact Information",
-      url: "/dashboard/contact-information",
-      icon: IconAddressBook,
+     {
+      title: "Founders",
+      url: "/dashboard/founders",
+      icon: IconCrown,
     },
-    {
-      title: "Social Media",
-      url: "/dashboard/social-media",
-      icon: IconShare,
+     {
+      title: "Our Work",
+      url: "/dashboard/work",
+      icon: IconHeartHandshake,
     },
      {
       title: "Events",
@@ -81,20 +83,26 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
       url: "/dashboard/blogs",
       icon: IconArticle,
     },
-     {
-      title: "Office Photos",
-      url: "/dashboard/office-photos",
-      icon: IconBuilding,
-    },
     {
+      title: "Contact Information",
+      url: "/dashboard/contact-information",
+      icon: IconAddressBook,
+    },
+     {
       title: "Donation Information",
       url: "/dashboard/donation-information",
       icon: IconHeart,
     },
+    {
+      title: "Social Media",
+      url: "/dashboard/social-media",
+      icon: IconShare,
+    }, 
+    
      {
-      title: "Founders",
-      url: "/dashboard/founders",
-      icon: IconCrown,
+      title: "Office Photos",
+      url: "/dashboard/office-photos",
+      icon: IconBuilding,
     },
      {
       title: "My Activity",

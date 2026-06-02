@@ -1,5 +1,6 @@
 import { getAllAboutBanners } from '@/actions/banner-actions/about-banner'
 import { getAllFounders } from '@/actions/founders'
+import { getAllWorks } from '@/actions/work'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/front-header'
 import { MiniHero } from '@/components/MiniHero'
@@ -13,18 +14,15 @@ export const metadata = {
 export default async function About() {
   const resultOfFounders = await getAllFounders();
   const founders = resultOfFounders.success ? resultOfFounders.data || [] : [];
+
+  const resultOfWorks = await getAllWorks()
+  const works = resultOfWorks.success ? resultOfWorks.data || [] : []
   const getGridCols = (count: number) => {
   if (count === 1) return 'grid-cols-1';
   if (count === 2) return 'grid-cols-1 md:grid-cols-2';
   return 'grid-cols-1 md:grid-cols-3';
 };
   
-
-  const galleries = [
-    { image: '/images/gallery-1.jpg', caption: 'Community Outreach Program' },
-    { image: '/images/gallery-2.jpg', caption: 'Skills Training Workshop' },
-    { image: '/images/gallery-3.jpg', caption: 'Community Celebration' },
-  ]
 
   const result = await getAllAboutBanners()
 
@@ -158,15 +156,22 @@ export default async function About() {
       )}
 
 
-      {/* Gallery */}
-      <section className="py-16 md:py-24 bg-muted/30">
+      {/* Our Work */}
+      {works.length > 0 && (
+        <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
             Our Work in Action
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {galleries.map((item, index) => (
-              <div key={index} className="group overflow-hidden rounded-lg">
+          <div className={`grid gap-6 w-full max-w-5xl ${
+          works.length === 1
+            ? 'grid-cols-1'
+            : works.length === 2
+            ? 'grid-cols-1 md:grid-cols-2'
+            : 'grid-cols-1 md:grid-cols-3'
+        }`}>
+            {works.map((item, index) => (
+              <div key={index} className="group overflow-hidden rounded-lg w-full max-w-sm mx-auto">
                 <div className="relative h-80 w-full overflow-hidden rounded-lg">
                   <Image
                     src={item.image}
@@ -183,6 +188,8 @@ export default async function About() {
           </div>
         </div>
       </section>
+      )}
+      
 
       {/* Impact Statistics */}
       <section className="py-16 md:py-24">

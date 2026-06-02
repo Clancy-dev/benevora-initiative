@@ -192,7 +192,7 @@ export default function BannerDetailPage() {
               <div className="flex gap-3 pt-4 border-t border-border">
                 <Button
                   onClick={() =>
-                    router.push(`/admin/banners/edit?id=${bannerId}`)
+                    router.push(`/dashboard/banners/edit?id=${bannerId}`)
                   }
                   className="gap-2"
                 >

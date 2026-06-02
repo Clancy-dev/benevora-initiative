@@ -177,3 +177,19 @@ model Founder {
   updatedAt DateTime @updatedAt
 }
 
+// ------------------------
+// WORK MODEL (Our Work Gallery)
+// ------------------------
+model Work {
+  id String @id @default(cuid())
+  caption String
+  image String // Cloudinary URL
+  order Int @default(0)
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
