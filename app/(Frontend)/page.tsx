@@ -16,7 +16,7 @@ export default function Home() {
       {/* Mission & Impact Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">
                 Our Mission
@@ -34,14 +34,7 @@ export default function Home() {
                 Learn More About Us
               </Link>
             </div>
-            <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
-              <Image
-                src="/images/gallery-1.jpg"
-                alt="Our Mission"
-                fill
-                className="object-cover"
-              />
-            </div>
+            
           </div>
         </div>
       </section>
