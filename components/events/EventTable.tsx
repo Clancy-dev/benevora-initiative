@@ -1,0 +1,170 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { MoreHorizontal, Eye, Edit, Trash2 } from 'lucide-react';
+import { deleteEvent } from '@/actions/events';
+import toast from 'react-hot-toast';
+
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  date: string;
+  order: number;
+}
+
+interface EventTableProps {
+  events: Event[];
+}
+
+export function EventTable({ events }: EventTableProps) {
+  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
+
+  const handleDelete = async (event: Event) => {
+    setIsDeleting(event.id);
+
+    try {
+      const result = await deleteEvent(event.id);
+
+      if (result.success) {
+        toast.success('Event has been moved to trash.')
+        router.refresh();
+      } else {
+        toast.error(result.error || 'Failed to delete event')
+      }
+    } catch (error) {
+      toast.error('Failed to delete event')
+    } finally {
+      setIsDeleting(null);
+      setEventToDelete(null);
+    }
+  };
+
+  if (events.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64 rounded-lg border border-dashed border-border bg-muted/30">
+        <div className="text-center">
+          <p className="text-lg font-semibold text-foreground mb-2">No Events Found</p>
+          <p className="text-sm text-foreground/60 mb-4">Start by creating your first event</p>
+          <Button onClick={() => router.push('/dashboard/events/create')}>
+            Create Event
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="rounded-lg border border-border overflow-hidden bg-background">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-muted border-b border-border">
+              <tr>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Image</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Title</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Description</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Date</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Order</th>
+                <th className="px-6 py-4 text-right text-sm font-semibold text-foreground">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {events.map((event) => (
+                <tr
+                  key={event.id}
+                  className="hover:bg-muted/30 transition-colors"
+                >
+                  <td className="px-6 py-4">
+                    <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-border">
+                      <Image
+                        src={event.image}
+                        alt={event.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-sm font-semibold text-foreground">{event.title}</td>
+                  <td className="px-6 py-4 text-sm text-foreground/80 max-w-xs truncate">{event.description}</td>
+                  <td className="px-6 py-4 text-sm text-foreground/80">{event.date}</td>
+                  <td className="px-6 py-4 text-sm text-foreground/80">{event.order}</td>
+                  <td className="px-6 py-4 text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => router.push(`/dashboard/events/${event.id}`)}
+                        >
+                          <Eye className="mr-2 h-4 w-4" />
+                          View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => router.push(`/dashboard/events/edit?id=${event.id}`)}
+                        >
+                          <Edit className="mr-2 h-4 w-4" />
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => setEventToDelete(event)}
+                          className="text-red-600 focus:bg-red-50 focus:text-red-600"
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!eventToDelete} onOpenChange={(open) => !open && setEventToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogTitle>Delete Event?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Are you sure you want to delete <span className="font-semibold">{eventToDelete?.title}</span>? This action can be undone from the trash.
+          </AlertDialogDescription>
+          <div className="flex gap-4 justify-end">
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => eventToDelete && handleDelete(eventToDelete)}
+              disabled={isDeleting === eventToDelete?.id}
+              className="bg-destructive text-background hover:bg-destructive/90 cursor-pointer"
+            >
+              {isDeleting === eventToDelete?.id ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+}

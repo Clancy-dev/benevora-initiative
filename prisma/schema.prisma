@@ -193,3 +193,21 @@ model Work {
   updatedAt DateTime @updatedAt
 }
 
+
+// ------------------------
+// EVENT MODEL
+// ------------------------
+model Event {
+  id String @id @default(cuid())
+  title String
+  description String
+  image String // Cloudinary URL
+  date String
+  order Int @default(0)
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
