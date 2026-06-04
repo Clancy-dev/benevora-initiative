@@ -1,4 +1,4 @@
-
+import { getAllBlogsBanners } from '@/actions/banner-actions/blogs-banner'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/front-header'
 import { MiniHero } from '@/components/MiniHero'
@@ -9,7 +9,7 @@ export const metadata = {
   description: 'Read our latest stories, insights, and updates from Benevora Initiative.',
 }
 
-export default function Blogs() {
+export default async function Blogs() {
   const blogs = [
     {
       id: 1,
@@ -73,13 +73,16 @@ export default function Blogs() {
     },
   ]
 
+  const result = await getAllBlogsBanners()
+  const banner = result.success ? result.data?.[0] : null
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
       <MiniHero
-        image="/images/hero-events.jpg"
-        title="Our Blog"
-        subtitle="Stories, Insights & Updates"
+          image={banner?.image ?? '/blog-image.png'}
+          title={banner?.title ?? 'Our Blog'}
+          subtitle={banner?.subtitle ?? 'Stories, Insights & Updates'}
       />
 
       {/* Blog Grid */}

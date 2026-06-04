@@ -113,6 +113,22 @@ model EventsBanner {
   updatedAt DateTime @updatedAt
 }
 
+// ------------------------
+// BLOGSBANNER MODEL
+// ------------------------
+model BlogsBanner {
+  id String @id @default(cuid())
+  title String
+  subtitle String
+  image String // Cloudinary URL
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model CompanySettings {
   id                                     String   @id
   createdAt                              DateTime @default(now())
