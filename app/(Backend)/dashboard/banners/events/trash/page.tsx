@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-
-import { useToast } from '@/hooks/use-toast'
 import { Button } from '@/components/ui/button'
 import {
   AlertDialog,
@@ -25,8 +23,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import { MoreHorizontal } from 'lucide-react'
-import { getDeletedAboutBanners, permanentDeleteAboutBanner, restoreAboutBanner } from '@/actions/banner-actions/about-banner'
 import toast from 'react-hot-toast'
+import { getDeletedEventsBanners, permanentDeleteEventsBanner, restoreEventsBanner } from '@/actions/banner-actions/events-banner'
 
 interface DeletedBanner {
   id: string
@@ -52,7 +50,7 @@ export default function TrashPage() {
   async function fetchDeletedBanners() {
     try {
       setIsLoading(true)
-      const result = await getDeletedAboutBanners()
+      const result = await getDeletedEventsBanners()
 
       if (!result.success) {
         toast.error('Failed to load deleted banners')
@@ -74,7 +72,7 @@ export default function TrashPage() {
 
     try {
       setIsProcessing(true)
-      const result = await restoreAboutBanner(selectedId)
+      const result = await restoreEventsBanner(selectedId)
 
       if (!result.success) {
         toast.error('Failed to restore banner')
@@ -100,7 +98,7 @@ export default function TrashPage() {
 
     try {
       setIsProcessing(true)
-      const result = await permanentDeleteAboutBanner(selectedId)
+      const result = await permanentDeleteEventsBanner(selectedId)
 
       if (!result.success) {
         toast.error('Failed to permanently delete banner')
@@ -142,12 +140,12 @@ export default function TrashPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <Link href="/dashboard/banners/about">
-              <Button variant="ghost">← Back to About Banners</Button>
+            <Link href="/dashboard/banners/events">
+              <Button variant="ghost">← Back to Events Banners</Button>
             </Link>
             <h1 className="text-3xl font-bold mt-4">Trash</h1>
             <p className="text-muted-foreground mt-2">
-              Manage deleted about banners
+              Manage deleted events banners
             </p>
           </div>
         </div>
@@ -236,7 +234,7 @@ export default function TrashPage() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {action === 'restore' ? 'Restore About Banner' : 'Permanently Delete About Banner'}
+              {action === 'restore' ? 'Restore Events Banner' : 'Permanently Delete Events Banner'}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {action === 'restore'

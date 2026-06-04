@@ -25,7 +25,6 @@ export default async function About() {
   
 
   const result = await getAllAboutBanners()
-
   const banner = result.success ? result.data?.[0] : null
 
   return (

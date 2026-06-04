@@ -1,3 +1,4 @@
+import { getAllEventsBanners } from '@/actions/banner-actions/events-banner'
 import { getAllEvents } from '@/actions/events'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/front-header'
@@ -18,14 +19,17 @@ export default async function Events() {
   return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 };
 
+  const resultofEventsBanners = await getAllEventsBanners()
+  const banner = resultofEventsBanners.success ? resultofEventsBanners.data?.[0] : null
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
       <MiniHero
-        image="/images/hero-events.jpg"
-        title="Events"
-        subtitle="Join Us in Making a Difference"
-      />
+          image={banner?.image ?? '/events-image.png'}
+          title={banner?.title ?? 'Events'}
+          subtitle={banner?.subtitle ?? 'Join Us in Making a Difference'}
+       />
 
      {/* Events Grid */}
      <section className="py-16 md:py-24">
