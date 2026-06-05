@@ -1,4 +1,4 @@
-
+import { getAllContactBanners } from '@/actions/banner-actions/contact-banner'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/front-header'
 import { MiniHero } from '@/components/MiniHero'
@@ -10,20 +10,23 @@ export const metadata = {
   description: 'Get in touch with Benevora Initiative. We would love to hear from you.',
 }
 
-export default function Contact() {
+export default async function Contact() {
   const officeImages = [
     '/images/office-1.jpg',
     '/images/office-2.jpg',
     '/images/office-3.jpg',
   ]
 
+    const result = await getAllContactBanners()
+    const banner = result.success ? result.data?.[0] : null
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header />
       <MiniHero
-        image="/images/hero-contact.jpg"
-        title="Get In Touch"
-        subtitle="We Would Love to Hear From You"
+        image={banner?.image ?? '/contact-us.jpg'}
+        title={banner?.title ?? 'Get In Touch'}
+        subtitle={banner?.subtitle ?? 'We Would Love to Hear From You'}
       />
 
       {/* Contact Information */}
