@@ -1,70 +1,56 @@
 'use client';
 
 import Link from 'next/link';
+import { MapPin, Map, Image } from 'lucide-react';
 
-import { FaLinkedin } from "react-icons/fa6";
-import { SiFacebook, SiInstagram, SiX, SiWhatsapp } from "react-icons/si";
-
-const socialMediaOptions = [
+const locationOptions = [
   {
-    id: 'whatsapp',
-    title: 'WhatsApp',
-    description: 'Integrate your Whatsapp handle to the website',
-    href: '/social-media/whatsapp',
-    icon: SiWhatsapp,
-    accentColor: 'bg-green-500',
+    id: 'address',
+    title: 'Address',
+    description: 'View and manage our office address',
+    href: '/contact/location/address',
+    icon: MapPin,
+    accentColor: 'from-blue-500 to-cyan-500 dark:from-blue-400 dark:to-cyan-400'
   },
   {
-    id: 'facebook',
-    title: 'Facebook',
-    description: 'Integrate your Facebook page to the website',
-    href: '/social-media/facebook',
-    icon: SiFacebook,
-    accentColor: 'bg-blue-600',
+    id: 'maps',
+    title: 'Google Maps Snippet',
+    description: 'Embed and manage map location',
+    href: '/contact/location/maps',
+    icon: Map,
+    accentColor: 'from-green-500 to-emerald-500 dark:from-green-400 dark:to-emerald-400'
   },
   {
-    id: 'instagram',
-    title: 'Instagram',
-    description: 'Integrate your Instagram page to the website',
-    href: '/social-media/instagram',
-    icon: SiInstagram,
-    accentColor: 'bg-pink-600',
-  },
-  {
-    id: 'x',
-    title: 'X / Formerly Twitter',
-    description: 'Integrate your X page to the website',
-    href: '/social-media/x',
-    icon: SiX,
-    accentColor: 'bg-black',
-  },
-  {
-    id: 'linkedin',
-    title: 'LinkedIn',
-    description: 'Integrate your LinkedIn page to the website',
-    href: '/social-media/linkedin',
-    icon: FaLinkedin,
-    accentColor: 'bg-blue-700',
+    id: 'photos',
+    title: 'Office Photos',
+    description: 'Upload and manage office gallery',
+    href: '/contact/location/photos',
+    icon: Image,
+    accentColor: 'from-orange-500 to-red-500 dark:from-orange-400 dark:to-red-400'
   }
 ];
 
-export default function SocialMediaPage() {
+export default function LocationPage() {
   return (
     <main className="min-h-screen bg-background px-8 py-12">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-12">
+          <Link href="/dashboard/contact" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-6">
+            <span>←</span>
+            <span className="text-sm font-medium">Back to Contact Information</span>
+          </Link>
           <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground mb-4">
-            Social Media Handles
+            Location
           </h1>
           <p className="text-pretty text-lg text-muted-foreground">
-            Manage your social media presence across all platforms
+            Manage all location-related information and media
           </p>
         </div>
 
-        {/* Social Media Cards Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {socialMediaOptions.map((option) => {
+        {/* Location Cards Grid */}
+        <div className="grid gap-6 md:grid-cols-3">
+          {locationOptions.map((option) => {
             const Icon = option.icon;
             return (
               <Link key={option.id} href={option.href}>
@@ -79,9 +65,9 @@ export default function SocialMediaPage() {
                     {/* Icon Container */}
                     <div className="mb-6 inline-flex">
                       <div
-                        className={`rounded-lg bg-gradient-to-br ${option.accentColor} p-3`}
+                        className={`rounded-full bg-gradient-to-br ${option.accentColor} p-3`}
                       >
-                        <Icon className="size-8 text-background dark:text-white" />
+                        <Icon className="size-6 text-card" />
                       </div>
                     </div>
 
@@ -97,7 +83,7 @@ export default function SocialMediaPage() {
 
                     {/* Arrow Indicator */}
                     <div className="flex items-center gap-2 text-primary group-hover:gap-3 transition-all">
-                      <span className="text-sm font-medium">Manage</span>
+                      <span className="text-sm font-medium">Edit</span>
                       <span className="transition-transform group-hover:translate-x-1">
                         →
                       </span>

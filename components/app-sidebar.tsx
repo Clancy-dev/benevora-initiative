@@ -85,12 +85,12 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
     },
     {
       title: "Contact Information",
-      url: "/dashboard/contact-information",
+      url: "/dashboard/contact",
       icon: IconAddressBook,
     },
      {
       title: "Donation Information",
-      url: "/dashboard/donation-information",
+      url: "/dashboard/donation",
       icon: IconHeart,
     },
     {
@@ -98,12 +98,6 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
       url: "/dashboard/social-media",
       icon: IconShare,
     }, 
-    
-     {
-      title: "Office Photos",
-      url: "/dashboard/office-photos",
-      icon: IconBuilding,
-    },
      {
       title: "My Activity",
       url: "/dashboard/my-activity",
@@ -127,18 +121,16 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
         ]
       : []),
 
+        {
+      title: "Settings",
+      url: "/dashboard/settings",
+      icon: IconSettings,
+       },
        {
       title: "View Site",
       url: "/",
       icon: IconWorld,
-    },
-     {
-      title: "Settings",
-      url: "/dashboard/settings",
-      icon: IconSettings,
-    },
-  
-   
+       },
     
   ];
 
@@ -150,7 +142,7 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:p-1.5!">
-              <a href="/dashboard/overview" className="flex items-center gap-3">
+              <a href="/dashboard/overview" className="flex items-center gap-3 hover:none disabled">
   <div className="relative w-8 h-8">
     <Image
       src={theme === "dark" ? "/logo-dark.png" : "/logo.png"}
