@@ -313,3 +313,19 @@ model Event {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+// ------------------------
+// OFFICE PHOTO MODEL
+// ------------------------
+model OfficePhoto {
+  id String @id @default(cuid())
+  image String // Cloudinary URL
+  order Int @default(0)
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

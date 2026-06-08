@@ -21,9 +21,12 @@ export function Footer() {
             <h3 className="font-bold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li><Link href="/" className="hover:underline">Home</Link></li>
-              <li><Link href="/about" className="hover:underline">About Us</Link></li>
+              <li><Link href="/about" className="hover:underline">About</Link></li>
               <li><Link href="/events" className="hover:underline">Events</Link></li>
+              <li><Link href="/blogs" className="hover:underline">Blogs</Link></li>
+              <li><Link href="/membership" className="hover:underline">Membership</Link></li>
               <li><Link href="/contact" className="hover:underline">Contact</Link></li>
+              <li><Link href="/donate" className="hover:underline">Donate</Link></li>
             </ul>
           </div>
 

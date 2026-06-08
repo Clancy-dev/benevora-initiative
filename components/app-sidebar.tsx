@@ -85,7 +85,7 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
     },
     {
       title: "Contact Information",
-      url: "/dashboard/contact",
+      url: "/dashboard/contact-information",
       icon: IconAddressBook,
     },
      {

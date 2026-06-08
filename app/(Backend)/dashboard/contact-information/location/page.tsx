@@ -24,7 +24,7 @@ const locationOptions = [
     id: 'photos',
     title: 'Office Photos',
     description: 'Upload and manage office gallery',
-    href: '/contact/location/photos',
+    href: '/dashboard/contact-information/location/office-photos',
     icon: Image,
     accentColor: 'from-orange-500 to-red-500 dark:from-orange-400 dark:to-red-400'
   }

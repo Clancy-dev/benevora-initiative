@@ -110,7 +110,7 @@ export default function ContactPage() {
           </Link>
 
           {/* LOCATION */}
-          <Link href="/dashboard/contact/location">
+          <Link href="/dashboard/contact-information/location">
             <div className={`group relative h-full overflow-hidden rounded-xl bg-card border border-border p-8 transition-all duration-300 hover:border-primary/30 hover:shadow-lg ${contactOptions[2].hoverBg}`}>
               <div className="relative z-10 flex h-full flex-col justify-between">
 

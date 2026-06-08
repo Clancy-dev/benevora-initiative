@@ -1,4 +1,5 @@
 import { getAllContactBanners } from '@/actions/banner-actions/contact-banner'
+import { getAllOfficePhotos } from '@/actions/office-photos'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/front-header'
 import { MiniHero } from '@/components/MiniHero'
@@ -11,14 +12,17 @@ export const metadata = {
 }
 
 export default async function Contact() {
-  const officeImages = [
-    '/images/office-1.jpg',
-    '/images/office-2.jpg',
-    '/images/office-3.jpg',
-  ]
+  const resultOfImages = await getAllOfficePhotos();
+  const officeImages = resultOfImages.success ? resultOfImages.data || [] : [];
 
-    const result = await getAllContactBanners()
-    const banner = result.success ? result.data?.[0] : null
+  const result = await getAllContactBanners()
+  const banner = result.success ? result.data?.[0] : null
+
+  const getOfficeGridCols = (count: number) => {
+  if (count === 1) return 'grid-cols-1 justify-items-center max-w-md mx-auto';
+  if (count === 2) return 'grid-cols-1 md:grid-cols-2 justify-items-center max-w-4xl mx-auto';
+  return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+};
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
@@ -157,28 +161,45 @@ export default async function Contact() {
         </div>
       </section>
 
-      {/* Office Gallery */}
+      {/* Office Organisation Photos */}
       <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-            Visit Our Office
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {officeImages.map((image, index) => (
-              <div key={index} className="group overflow-hidden rounded-lg">
-                <div className="relative h-72 w-full overflow-hidden rounded-lg">
-                  <Image
-                    src={image}
-                    alt={`Office ${index + 1}`}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-              </div>
-            ))}
+  <div className="container mx-auto px-4">
+    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
+      Visit Our Organisation
+    </h2>
+
+    {officeImages.length === 0 ? (
+      <div className="flex flex-col items-center justify-center text-center py-16 border border-dashed border-border rounded-lg bg-muted/20">
+        <h3 className="text-xl font-semibold text-foreground mb-2">
+          No Office Photos Yet
+        </h3>
+        <p className="text-foreground/60 max-w-md">
+          We are currently updating our office gallery. Please check back soon to see our workspace.
+        </p>
+      </div>
+    ) : (
+      <div className={`grid ${getOfficeGridCols(officeImages.length)} gap-6`}>
+        {officeImages.map((photo, index) => (
+          <div
+            key={photo.id}
+            className="group overflow-hidden rounded-lg w-full"
+          >
+            <div className="relative h-72 w-full overflow-hidden rounded-lg">
+              <Image
+                src={photo.image}
+                alt={`Office ${index + 1}`}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+     
 
       <Footer />
     </div>
