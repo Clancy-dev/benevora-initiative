@@ -157,37 +157,47 @@ export default async function About() {
 
       {/* Our Work */}
       {works.length > 0 && (
-        <section className="py-16 md:py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-            Our Work in Action
-          </h2>
-          <div className={`grid gap-6 w-full max-w-5xl ${
+  <section className="py-16 md:py-24 bg-muted/30">
+    <div className="container mx-auto px-4">
+
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
+        Our Work in Action
+      </h2>
+
+      <div
+        className={`grid gap-6 mx-auto ${
           works.length === 1
-            ? 'grid-cols-1'
+            ? 'grid-cols-1 max-w-md'
             : works.length === 2
-            ? 'grid-cols-1 md:grid-cols-2'
-            : 'grid-cols-1 md:grid-cols-3'
-        }`}>
-            {works.map((item, index) => (
-              <div key={index} className="group overflow-hidden rounded-lg w-full max-w-sm mx-auto">
-                <div className="relative h-80 w-full overflow-hidden rounded-lg">
-                  <Image
-                    src={item.image}
-                    alt={item.caption}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <p className="mt-3 text-center font-semibold text-foreground">
-                  {item.caption}
-                </p>
-              </div>
-            ))}
+            ? 'grid-cols-1 md:grid-cols-2 max-w-3xl'
+            : 'grid-cols-1 md:grid-cols-3 max-w-5xl'
+        }`}
+      >
+        {works.map((item, index) => (
+          <div
+            key={index}
+            className="group overflow-hidden rounded-lg w-full"
+          >
+            <div className="relative h-80 w-full overflow-hidden rounded-lg">
+              <Image
+                src={item.image}
+                alt={item.caption}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+
+            <p className="mt-3 text-center font-semibold text-foreground">
+              {item.caption}
+            </p>
           </div>
-        </div>
-      </section>
-      )}
+        ))}
+      </div>
+
+    </div>
+  </section>
+)}
+   
       
 
       {/* Impact Statistics */}
