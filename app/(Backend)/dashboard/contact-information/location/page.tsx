@@ -8,7 +8,7 @@ const locationOptions = [
     id: 'address',
     title: 'Address',
     description: 'View and manage our office address',
-    href: '/contact/location/address',
+    href: '/dashboard/contact-information/location/location-address',
     icon: MapPin,
     accentColor: 'from-blue-500 to-cyan-500 dark:from-blue-400 dark:to-cyan-400'
   },
@@ -16,7 +16,7 @@ const locationOptions = [
     id: 'maps',
     title: 'Google Maps Snippet',
     description: 'Embed and manage map location',
-    href: '/contact/location/maps',
+    href: '/dashboard/contact-information/location/map',
     icon: Map,
     accentColor: 'from-green-500 to-emerald-500 dark:from-green-400 dark:to-emerald-400'
   },
@@ -36,7 +36,7 @@ export default function LocationPage() {
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-12">
-          <Link href="/dashboard/contact" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-6">
+          <Link href="/dashboard/contact-information" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors mb-6">
             <span>←</span>
             <span className="text-sm font-medium">Back to Contact Information</span>
           </Link>

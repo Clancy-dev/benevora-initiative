@@ -52,7 +52,7 @@ export default function ContactPage() {
         <div className="grid gap-6 md:grid-cols-3">
 
           {/* PHONE */}
-          <Link href="/contact/phone">
+          <Link href="/dashboard/contact-information/phone-number">
             <div className={`group relative h-full overflow-hidden rounded-xl bg-card border border-border p-8 transition-all duration-300 hover:border-primary/30 hover:shadow-lg ${contactOptions[0].hoverBg}`}>
               <div className="relative z-10 flex h-full flex-col justify-between">
 
@@ -81,7 +81,7 @@ export default function ContactPage() {
           </Link>
 
           {/* EMAIL */}
-          <Link href="/contact/email">
+          <Link href="/dashboard/contact-information/email">
             <div className={`group relative h-full overflow-hidden rounded-xl bg-card border border-border p-8 transition-all duration-300 hover:border-primary/30 hover:shadow-lg ${contactOptions[1].hoverBg}`}>
               <div className="relative z-10 flex h-full flex-col justify-between">
 
