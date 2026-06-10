@@ -10,7 +10,7 @@ const socialMediaOptions = [
     id: 'whatsapp',
     title: 'WhatsApp',
     description: 'Integrate your Whatsapp handle to the website',
-    href: '/social-media/whatsapp',
+    href: '/dashboard/social-media/whatsapp',
     icon: SiWhatsapp,
     accentColor: 'bg-green-500',
   },
@@ -50,7 +50,7 @@ const socialMediaOptions = [
 
 export default function SocialMediaPage() {
   return (
-    <main className="min-h-screen bg-background px-8 py-12">
+    <main className="min-h-screen p-8">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-12">
@@ -79,7 +79,7 @@ export default function SocialMediaPage() {
                     {/* Icon Container */}
                     <div className="mb-6 inline-flex">
                       <div
-                        className={`rounded-lg bg-gradient-to-br ${option.accentColor} p-3`}
+                        className={`rounded-full bg-gradient-to-br ${option.accentColor} p-3`}
                       >
                         <Icon className="size-8 text-background dark:text-white" />
                       </div>

@@ -6,17 +6,16 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { getServerSession } from 'next-auth';
 import React from 'react'
 
-
-
-
 export default async function DashboardLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
+
+   const session = await getServerSession(authOptions);
+
   return (
-    <Providers>
+    <Providers session={session}>
       <SidebarProvider
       style={
         {

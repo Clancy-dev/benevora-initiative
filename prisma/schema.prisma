@@ -394,3 +394,19 @@ model PhoneNumber {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+// ------------------------
+// WHATSAPP MODEL
+// ------------------------
+model Whatsapp {
+  id String @id @default(cuid())
+  phoneNumber String
+  isActive Boolean @default(true)
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

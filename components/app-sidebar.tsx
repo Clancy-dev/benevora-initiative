@@ -141,8 +141,9 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:p-1.5!">
-              <a href="/dashboard/overview" className="flex items-center gap-3 hover:none disabled">
+            <SidebarMenuButton asChild className="p-1.5 hover:bg-transparent focus:bg-transparent active:bg-transparent cursor-default">
+              
+              <div className="flex items-center gap-3 ">
   <div className="relative w-8 h-8">
     <Image
       src={theme === "dark" ? "/logo-dark.png" : "/logo.png"}
@@ -160,7 +161,7 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
       Initiative
     </span>
   </div>
-</a>
+</div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

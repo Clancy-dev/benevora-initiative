@@ -52,7 +52,7 @@ export function NavMain({
                   tooltip={item.title}
                   className={`cursor-pointer ${
                     isActive
-                      ? "bg-primary text-primary-foreground font-medium"
+                      ? "bg-primary text-primary-foreground dark:text-foreground font-medium"
                       : ""
                   }`}
                 >
