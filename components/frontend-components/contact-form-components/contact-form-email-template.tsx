@@ -1,11 +1,11 @@
-interface EmailTemplateProps {
+interface ContactFormEmailTemplateProps {
   firstName: string;
   email: string;
   phone: string;
   message: string;
 }
 
-export const EmailTemplate = (props: EmailTemplateProps) => {
+export const ContactFormEmailTemplate = (props: ContactFormEmailTemplateProps) => {
   const { firstName, email, phone, message } = props;
   return (
   <div

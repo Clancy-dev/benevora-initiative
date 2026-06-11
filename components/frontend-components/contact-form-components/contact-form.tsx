@@ -2,7 +2,7 @@
 
 import { useState, FormEvent, ChangeEvent } from 'react';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
-import { sendContactEmail } from '@/actions/frontend-actions/contact-form-actions/contact-email';
+import { sendContactEmail } from '@/actions/frontend-actions/contact-form-actions/contact-form';
 
 interface FormData {
   name: string;
@@ -61,7 +61,7 @@ export default function ContactForm() {
         // Auto-reset success message after 5 seconds
         setTimeout(() => {
           setFormState({ status: 'idle', message: '' });
-        }, 15000);
+        }, 10000);
       } else {
         setFormState({
           status: 'error',

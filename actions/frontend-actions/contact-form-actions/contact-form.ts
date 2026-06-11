@@ -1,6 +1,6 @@
 'use server';
 
-import { EmailTemplate } from '@/components/frontend-components/contact-form-components/email-template';
+import { ContactFormEmailTemplate } from '@/components/frontend-components/contact-form-components/contact-form-email-template';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -37,7 +37,7 @@ export async function sendContactEmail(data: ContactFormData) {
       to: ['clancyro1789@gmail.com'], 
       replyTo: data.email,
       subject: `New Contact Form Message from ${data.name}`,
-      react: EmailTemplate({
+      react: ContactFormEmailTemplate({
         firstName: data.name,
         email: data.email,
         phone: data.phone,

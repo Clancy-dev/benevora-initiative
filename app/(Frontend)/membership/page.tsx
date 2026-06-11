@@ -2,11 +2,9 @@ import { Footer } from '@/components/Footer'
 import { MiniHero } from '@/components/MiniHero'
 import { Header } from '@/components/front-header'
 import { getAllMembershipBanners } from '@/actions/banner-actions/membership'
-import MembershipApplicantForm from '@/components/MembershipApplicantForm'
+import MembershipApplicantForm from '@/components/frontend-components/membership-form/membership-form'
 
 export default async function MembershipPage() {
-
-
   const result = await getAllMembershipBanners()
   const banner = result.success ? result.data?.[0] : null
 
