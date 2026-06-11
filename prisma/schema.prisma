@@ -410,3 +410,64 @@ model Whatsapp {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+// ------------------------
+// FACEBOOK MODEL
+// ------------------------
+model Facebook {
+  id String @id @default(cuid())
+  url String
+  isActive Boolean @default(true)
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------
+// INSTAGRAM MODEL
+// ------------------------
+model Instagram {
+  id String @id @default(cuid())
+  handle String
+  isActive Boolean @default(true)
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------
+// X (TWITTER) MODEL
+// ------------------------
+model X {
+  id String @id @default(cuid())
+  handle String
+  isActive Boolean @default(true)
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ------------------------
+// LINKEDIN MODEL
+// ------------------------
+model LinkedIn {
+  id String @id @default(cuid())
+  url String
+  isActive Boolean @default(true)
+  
+  isDeleted Boolean @default(false)
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,22 +1,10 @@
+import { getAllFacebookLinks } from '@/actions/facebook';
+import { getAllInstagramLinks } from '@/actions/instagram';
+import { getAllLinkedinLinks } from '@/actions/linkedin';
 import {
   getAllWhatsappLinks,
 } from '@/actions/whatsapp';
-
-// import {
-//   getAllFacebookLinks,
-// } from '@/actions/facebook';
-
-// import {
-//   getAllInstagramLinks,
-// } from '@/actions/instagram';
-
-// import {
-//   getAllXLinks,
-// } from '@/actions/x';
-
-// import {
-//   getAllLinkedinLinks,
-// } from '@/actions/linkedin';
+import { getAllXLinks } from '@/actions/x';
 import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaLinkedin, FaWhatsapp, FaXTwitter } from 'react-icons/fa6';
 
@@ -30,16 +18,16 @@ interface SocialLink {
 export async function Footer() {
   const [
     whatsappResult,
-    // facebookResult,
-    // instagramResult,
-    // xResult,
-    // linkedinResult,
+    facebookResult,
+    instagramResult,
+    xResult,
+    linkedinResult,
   ] = await Promise.all([
     getAllWhatsappLinks(),
-    // getAllFacebookLinks(),
-    // getAllInstagramLinks(),
-    // getAllXLinks(),
-    // getAllLinkedinLinks(),
+    getAllFacebookLinks(),
+    getAllInstagramLinks(),
+    getAllXLinks(),
+    getAllLinkedinLinks(),
   ]);
 
   const socialLinks: SocialLink[] = [];
@@ -49,25 +37,25 @@ export async function Footer() {
       ? whatsappResult.data
       : [];
 
-  // const facebookLinks =
-  //   facebookResult.success && facebookResult.data
-  //     ? facebookResult.data
-  //     : [];
+  const facebookLinks =
+    facebookResult.success && facebookResult.data
+      ? facebookResult.data
+      : [];
 
-  // const instagramLinks =
-  //   instagramResult.success && instagramResult.data
-  //     ? instagramResult.data
-  //     : [];
+  const instagramLinks =
+    instagramResult.success && instagramResult.data
+      ? instagramResult.data
+      : [];
 
-  // const xLinks =
-  //   xResult.success && xResult.data
-  //     ? xResult.data
-  //     : [];
+  const xLinks =
+    xResult.success && xResult.data
+      ? xResult.data
+      : [];
 
-  // const linkedinLinks =
-  //   linkedinResult.success && linkedinResult.data
-  //     ? linkedinResult.data
-  //     : [];
+  const linkedinLinks =
+    linkedinResult.success && linkedinResult.data
+      ? linkedinResult.data
+      : [];
 
   whatsappLinks.forEach((item: any) => {
     if (item.isActive) {
@@ -82,43 +70,43 @@ export async function Footer() {
     }
   });
 
-  // facebookLinks.forEach((item: any) => {
-  //   if (item.isActive) {
-  //     socialLinks.push({
-  //       type: 'facebook',
-  //       url: item.url,
-  //     });
-  //   }
-  // });
+  facebookLinks.forEach((item: any) => {
+    if (item.isActive) {
+      socialLinks.push({
+        type: 'facebook',
+        url: item.url,
+      });
+    }
+  });
 
-  // instagramLinks.forEach((item: any) => {
-  //   if (item.isActive) {
-  //     socialLinks.push({
-  //       type: 'instagram',
-  //       url: `https://instagram.com/${item.handle}`,
-  //       handle: item.handle,
-  //     });
-  //   }
-  // });
+  instagramLinks.forEach((item: any) => {
+    if (item.isActive) {
+      socialLinks.push({
+        type: 'instagram',
+        url: `https://instagram.com/${item.handle}`,
+        handle: item.handle,
+      });
+    }
+  });
 
-  // xLinks.forEach((item: any) => {
-  //   if (item.isActive) {
-  //     socialLinks.push({
-  //       type: 'x',
-  //       url: `https://x.com/${item.handle}`,
-  //       handle: item.handle,
-  //     });
-  //   }
-  // });
+  xLinks.forEach((item: any) => {
+    if (item.isActive) {
+      socialLinks.push({
+        type: 'x',
+        url: `https://x.com/${item.handle}`,
+        handle: item.handle,
+      });
+    }
+  });
 
-  // linkedinLinks.forEach((item: any) => {
-  //   if (item.isActive) {
-  //     socialLinks.push({
-  //       type: 'linkedin',
-  //       url: item.url,
-  //     });
-  //   }
-  // });
+  linkedinLinks.forEach((item: any) => {
+    if (item.isActive) {
+      socialLinks.push({
+        type: 'linkedin',
+        url: item.url,
+      });
+    }
+  });
 
   if (socialLinks.length === 0) {
     return null;
