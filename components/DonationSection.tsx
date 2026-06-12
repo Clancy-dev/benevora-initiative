@@ -1,152 +1,231 @@
-"use client"
-import { predefinedAmounts } from "@/lib/currencyUtils"
-import Link from "next/link"
-import { useEffect, useState } from "react"
-
+import React from 'react'
+import { Button } from './ui/button'
+import Link from 'next/link'
+import { ArrowRight, Heart } from 'lucide-react'
+import Image from 'next/image'
 
 export default function DonationSection() {
-     const [currency, setCurrency] = useState<'USD' | 'UGX'>('USD')
-      const [mounted, setMounted] = useState(false)
-    
-      useEffect(() => {
-        setMounted(true)
-        // Load currency preference from localStorage
-        const saved = localStorage.getItem('preferredCurrency')
-        if (saved === 'UGX' || saved === 'USD') {
-          setCurrency(saved)
-        }
-      }, [])
-    
-      useEffect(() => {
-        if (mounted) {
-          localStorage.setItem('preferredCurrency', currency)
-        }
-      }, [currency, mounted])
-    
-      if (!mounted) {
-        return null
-      }
-    
-      const amounts = predefinedAmounts[currency]
   return (
     <>
-    <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            {/* Currency Selector */}
-            <div className="mb-8 flex items-center gap-4">
-              <label className="font-semibold text-foreground">Preferred Currency:</label>
-              <div className="flex gap-2">
-                {['USD', 'UGX'].map((curr) => (
-                  <button
-                    key={curr}
-                    onClick={() => setCurrency(curr as 'USD' | 'UGX')}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                      currency === curr
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted text-foreground hover:bg-muted/80'
-                    }`}
-                  >
-                    {curr}
-                  </button>
-                ))}
+      {/* How to Donate Section */}
+      <section className="px-6 py-16 md:py-24">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="mb-12 text-center text-3xl font-bold text-primary">
+            How to Donate
+          </h2>
+
+          {/* Donation Methods Grid */}
+          <div className="grid gap-8 md:grid-cols-2 mb-12">
+            {/* MTN MoMo Pay */}
+            <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+              <div className="bg-[#FCC401] p-6 text-center">
+                <Image
+                  src="/mtn-momo.png"
+                  alt="MTN MoMo Pay"
+                  width={180}
+                  height={120}
+                  className="mx-auto rounded"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-primary mb-4">Donate by MTN MoMo Pay</h3>
+                <div className="space-y-3">
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Dial:</strong> *165*4*4#
+                    </span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Merchant code:</strong> 625314
+                    </span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Payment reference:</strong> Reason for donating
+                    </span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Amount:</strong> Enter desired amount
+                    </span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>PIN:</strong> Enter your PIN
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Donation Info */}
-            <div className="bg-muted/30 rounded-lg p-6 md:p-8 mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">
-                Why Your Donation Matters
-              </h2>
-              <ul className="space-y-3 text-foreground/80">
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-bold">•</span>
-                  <span>Every dollar helps us reach more people in need</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-bold">•</span>
-                  <span>Your support funds education, training, and community programs</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-bold">•</span>
-                  <span>We are transparent about how we use donations</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-bold">•</span>
-                  <span>Your donation creates lasting impact in communities</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Quick Amount Selection */}
-            <div className="mb-8">
-              <h3 className="text-lg font-bold text-foreground mb-4">
-                Select an Amount or Enter Custom Amount:
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-                {amounts.map((amount) => (
-                  <Link
-                    key={amount}
-                    href={`/donate/form?amount=${amount}&currency=${currency}`}
-                    className="p-4 bg-background border-2 border-primary rounded-lg text-center hover:bg-primary hover:text-primary-foreground transition-colors font-semibold"
-                  >
-                    {currency === 'USD' ? '$' : ''}{amount.toLocaleString()}
-                    {currency === 'UGX' ? ' UGX' : ''}
-                  </Link>
-                ))}
+            {/* Airtel Money */}
+            <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+              <div className="bg-[#E9010F] p-6 text-center">
+                <Image
+                  src="/airtel-money.png"
+                  alt="Airtel Money"
+                  width={180}
+                  height={120}
+                  className="mx-auto rounded"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-semibold text-primary mb-4">Donate by Airtel Money</h3>
+                <div className="space-y-3">
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Dial:</strong> *185*9#
+                    </span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Merchant code:</strong> 4375317
+                    </span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Account name:</strong> Benevora Initiative
+                    </span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Payment details:</strong> Reason for donating
+                    </span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <ArrowRight className="size-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/90">
+                      <strong>Amount:</strong> Enter desired amount
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Call to Action */}
-            <div className="text-center">
-              <Link
-                href={`/donate/form?currency=${currency}`}
-                className="inline-block px-8 py-4 bg-accent text-accent-foreground rounded-lg font-bold text-lg hover:opacity-90 transition-opacity"
-              >
-                Donate Now
-              </Link>
+            {/* Bank Transfer */}
+            <div className="md:col-span-2 overflow-hidden rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+              <div className="border-b border-border p-6 bg-primary/5">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-primary">Donate by Bank Transfer</h3>
+                  <Image
+                    src="/stanbic-bank.png"
+                    alt="Stanbic Bank Uganda"
+                    width={120}
+                    height={100}
+                    className="rounded"
+                  />
+                </div>
+              </div>
+              <div className="p-6 md:p-8">
+                <div className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">Account Name</p>
+                      <p className="text-lg font-semibold text-foreground">Benevora Initiative</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">Bank</p>
+                      <p className="text-lg font-semibold text-foreground">Stanbic Bank Uganda</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">Branch</p>
+                      <p className="text-lg font-semibold text-foreground">Hoima</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">Account Number</p>
+                      <p className="text-lg font-semibold text-foreground font-mono">104582739615</p>
+                    </div>
+                  </div>
+                  <div className="pt-4 border-t border-border">
+                    <p className="text-sm font-medium text-muted-foreground mb-1">SWIFT Code</p>
+                    <p className="text-lg font-semibold text-foreground font-mono">SBICUGKX</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center gap-4 my-16">
+            <div className="flex-1 h-px bg-border"></div>
+            <span className="text-sm font-medium text-muted-foreground px-4">Or</span>
+            <div className="flex-1 h-px bg-border"></div>
+          </div>
+
+          {/* International Donations */}
+          <div className="rounded-lg border border-border bg-card shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+            <div className="bg-accent/10 p-6 md:p-8">
+              <h3 className="text-2xl font-bold text-primary mb-4">International Donations</h3>
+              <p className="text-foreground/90 mb-6">
+                Donate to us through our international partner Global Giving
+              </p>
+              
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-shrink-0">
+                  <Image
+                    src="/global-giving-logo.png"
+                    alt="Global Giving"
+                    width={200}
+                    height={200}
+                    className="rounded-lg shadow-md"
+                  />
+                </div>
+                
+                <div className="flex-1">
+                  <p className="text-foreground/90 mb-6">
+                    Join our international community of supporters and make a lasting impact globally. Global Giving makes it easy to donate securely from anywhere in the world.
+                  </p>
+                  <a
+                    href="https://www.globalgiving.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                  >
+                    <Button className="gap-2 cursor-pointer bg-primary hover:bg-primary/90">
+                      Donate via Global Giving
+                      <ArrowRight className="size-4" />
+                    </Button>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Impact Section */}
-       <section className="py-16 md:py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-            See Your Impact
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              {
-                amount: currency === 'USD' ? '$10' : '37,500 UGX',
-                impact: 'Feeds a child for a week',
-              },
-              {
-                amount: currency === 'USD' ? '$25' : '93,750 UGX',
-                impact: 'Provides a training course',
-              },
-              {
-                amount: currency === 'USD' ? '$50' : '187,500 UGX',
-                impact: 'Supports a mentorship program',
-              },
-              {
-                amount: currency === 'USD' ? '$100' : '375,000 UGX',
-                impact: 'Funds a scholarship',
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="text-center p-6 bg-background rounded-lg border border-border"
-              >
-                <div className="text-3xl font-bold text-accent mb-2">{item.amount}</div>
-                <p className="text-foreground/80">{item.impact}</p>
-              </div>
-            ))}
+      {/* Call to Action - Contact Form CTA */}
+      <section className="bg-primary/10 px-6 py-16 md:py-20">
+        <div className="mx-auto max-w-3xl">
+          <div className="rounded-lg border border-primary/20 bg-card p-8 md:p-10 text-center shadow-sm">
+            <div className="mb-4 flex justify-center">
+              <Heart className="size-8 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold text-primary mb-4">Thank You for Your Generosity!</h3>
+            <p className="text-lg text-foreground/90 mb-2">
+              Please send us a message on our Contact Form after making your donation.
+            </p>
+            <p className="text-foreground/75 mb-6">
+              This helps us send you a donation receipt and acknowledge your generous support.
+            </p>
+            <Link href="/contact">
+              <Button className="gap-2 bg-primary cursor-pointer hover:bg-primary/90">
+                Go to Contact Form
+                <ArrowRight className="size-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
     </>
-      
   )
 }
