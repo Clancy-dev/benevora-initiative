@@ -88,22 +88,12 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
       url: "/dashboard/contact-information",
       icon: IconAddressBook,
     },
-     {
-      title: "Donation Information",
-      url: "/dashboard/donation",
-      icon: IconHeart,
-    },
     {
       title: "Social Media",
       url: "/dashboard/social-media",
       icon: IconShare,
     }, 
-     {
-      title: "My Activity",
-      url: "/dashboard/my-activity",
-      icon: IconActivity,
-    },
-
+    
 
     // Only show these to ADMIN
     ...(role === "ADMIN"
@@ -113,19 +103,10 @@ export function AppSidebar({ role, ...props }: AppSidebarProps) {
             url: "/dashboard/users",
             icon: IconUsers,
           },
-          {
-            title: "Global Activity",
-            url: "/dashboard/global-activity",
-            icon: IconFileText,
-          },
+          
         ]
       : []),
 
-        {
-      title: "Settings",
-      url: "/dashboard/settings",
-      icon: IconSettings,
-       },
        {
       title: "View Site",
       url: "/",

@@ -19,7 +19,7 @@ export function GreetingSection({ greeting, firstName, role }: GreetingSectionPr
       </div>
 
       {role && (
-          <p className="text-purple-600 mt-1 font-medium text-sm md:text-base">
+          <p className="text-green-900 mt-1 font-medium text-sm md:text-base">
             Role: {role}
           </p>
         )}
