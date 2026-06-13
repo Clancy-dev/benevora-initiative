@@ -23,7 +23,7 @@ export async function forgotPassword(email: string) {
 
   // const resetLink = `http://localhost:3000/resetpassword?token=${token}`; Debugging 
 
-  const resetLink = `https://receiptzgenerator.vercel.app/resetpassword?token=${token}`;
+  const resetLink = `https://benevorainitiative.vercel.app/resetpassword?token=${token}`;
 
   await resend.emails.send({
     from: 'Support <support@hopeharborcommunitytransformers.org>',
